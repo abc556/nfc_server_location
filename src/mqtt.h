@@ -4,7 +4,6 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
-#include <driver_mpu.h>
 
 //extern WiFiClient espClient;
 //extern PubSubClient client(WiFiClient);
