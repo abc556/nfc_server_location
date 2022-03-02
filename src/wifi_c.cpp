@@ -13,3 +13,13 @@ void wifi_init(){
         delay(100);
     }
 }
+
+bool wifi_stat() // connected will return true
+{
+    bool state = false;
+    if (WiFi.status() == WL_CONNECTED)
+    {
+        state = true;
+    }
+    return state;
+}
