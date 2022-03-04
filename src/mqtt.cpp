@@ -12,7 +12,7 @@ char* MQTT_TOPIC_SERVER = "/server";
 
 void mqtt_connect(){
     mqttclient.connect(mqtt_client_name);
-    Serial.println("mqtt connected as" + mqtt_client_name);
+    Serial.println("mqtt connected as" + String(mqtt_client_name));
 }
 
 void mqtt_init(char* client, char* topic){
@@ -22,7 +22,7 @@ void mqtt_init(char* client, char* topic){
     mqtt_connect();
 }
 
-void mqttpub(char* content){
+void mqtt_pub(String content){
   if (!mqttclient.connected()) {
     Serial.println("mqtt broker not connected. Reconnecting ...");
     mqtt_connect();

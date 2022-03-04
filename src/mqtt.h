@@ -16,7 +16,7 @@ extern char* MQTT_TOPIC_SERVER;
 
 void mqtt_connect();
 void mqtt_init(char* client, char* topic);
-void mqttpub(char* content);
+void mqtt_pub(String content);
 
 
 //to be added

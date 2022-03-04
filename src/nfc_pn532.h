@@ -22,6 +22,8 @@
 // NfcAdapter nfc = NfcAdapter(pn532_i2c);
 
 void nfc_begin();
-void nfc_loop();
+String nfc_read(NfcAdapter adapter);
+String nfc_reading_combine();
+
 
 #endif
