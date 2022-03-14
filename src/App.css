@@ -46,3 +46,9 @@
     height: 40px;
     width: 30%;
 }
+
+.qrCodeContainer {
+    margin: 30px;
+    height: 500px;
+    width: 500px;
+}

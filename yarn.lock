@@ -7396,6 +7396,13 @@ neo-async@^2.5.0, neo-async@^2.6.1, neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+next-qrcode@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/next-qrcode/-/next-qrcode-2.0.0.tgz#205c541a0428c69d7d368b255b32afb7c4a020d1"
+  integrity sha512-2rPMGeT4raIrJxAxbTVeCj1u23CtbBIHv0pH6T04MQvDIlups5wnmcBKDrnGZ0Y64/wzg9lVDxGCp8aRApqJWQ==
+  dependencies:
+    qrcode "^1.4.4"
+
 next-tick@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.1.0.tgz#1836ee30ad56d67ef281b22bd199f709449b35eb"
@@ -8823,7 +8830,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.6.0, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -8911,6 +8918,22 @@ qr.js@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
   integrity sha1-ys6GOG9ZoNuAUPqQ2baw6IoeNk8=
+
+qrcode-react@^0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/qrcode-react/-/qrcode-react-0.1.16.tgz#d064999d510ffc3e55a9ca3ffcf6c203c69f1517"
+  integrity sha512-FK+QCfFqCQMSxUE1byzglERJQkwKqXYvYMCS+/Ad2zACJOfoHkHHtRqsQQPji7lfb1y1qCXLvL+3eP1hAfg8Ng==
+  dependencies:
+    qr.js "0.0.0"
+
+qrcode.react@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/qrcode.react/-/qrcode.react-2.0.0.tgz#20b738eddcfc6958673bbbd1a0c5568ee5c399f5"
+  integrity sha512-1CCzwC4KHYCzOLb7M+lKYqHzDMVsppKJBhrU1ZDCuJRHKiD99LeDHOkuvUKCRvnJgDzp9SnB6/WNA7qp6I7ozA==
+  dependencies:
+    loose-envify "^1.4.0"
+    prop-types "^15.6.0"
+    qr.js "0.0.0"
 
 qrcode@^1.4.4:
   version "1.5.0"
