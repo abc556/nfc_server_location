@@ -1,5 +1,6 @@
 .App {
     text-align: center;
+    font-family: 'Helvetica'
 }
 
 .App-logo {
@@ -38,17 +39,303 @@
 }
 
 .navbarImg {
-    height: 200px;
+    height: 50px;
+    width: 100px
 }
 
 .valueInput {
-    margin: 50px;
-    height: 40px;
-    width: 30%;
+    margin: 20px;
+    height: 30px;
+    width: 200px;
 }
 
-.qrCodeContainer {
+.outerContainer {
+    display: flex;
+    flex-direction: row;
+    /* padding-left: 100px; */
+    margin: 20px;
+    justify-content: space-around;
+}
+
+.qrGeneratorContainer {
     margin: 30px;
-    height: 500px;
-    width: 500px;
+    height: 100%;
+    width: 250px;
+    /* width: 500px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.vaccinesContainer {
+    margin-top: 51.3px;
+    overflow-x: scroll;
+    height: 370px;
+    width: 300px;
+}
+
+.vaccine {
+    height: max-content;
+    width: 275px;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 0px 10px 0px;
+    justify-content: space-around;
+    overflow: auto;
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0.6;
+}
+
+.vaccine:hover {
+    background: rgba(255, 255, 255, 0.4);
+    opacity: 1
+}
+
+.vaccine div {
+    margin: 0px 5px 0px 5px;
+    text-align: left;
+}
+
+.clicked {
+    /* background: #9efffc; */
+    background: rgba(158, 255, 252, 1);
+    /* background: rgb(70, 152, 219); */
+    border-radius: 0px 30px 30px 0px;
+    color: #282c34;
+    font-weight: bold;
+    width: 300px;
+    opacity: 1;
+}
+
+.scanned {
+    background: rgba(0, 255, 255, 0.2);
+}
+
+.failed {
+    background: rgb(112, 0, 0);
+}
+
+.vaccineInfo {
+    font-size: 15px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.vaccineInfoNo {
+    width: 15%;
+}
+
+.flexRow {
+    display: flex;
+    justify-content: space-around;
+}
+
+.qrCSVContainer {
+    height: 440px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    background: #9efffc;
+    border-radius: 20px;
+    /* padding: 10px; */
+    color: #282c34;
+    font-weight: bolder;
+    position: relative
+}
+
+.buttonContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #282c34;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 0px;
+    height: 60px;
+    width: 100%
+}
+
+.vaccineQrInfo {
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 20px 20px 0px 0px;
+    padding: 5px 0px 5px 0px;
+    color: white;
+    width: 100%;
+    /* font-weight: bold; */
+}
+
+.circularContainer {
+    width: 60px;
+    font-size: 50px;
+    align-items: center;
+}
+
+.timerContainer {
+    position: relative;
+    display: flex;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    height: 55px;
+}
+
+.seconds {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgb(7, 87, 87);
+    border-radius: 50px;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    color: white;
+    font-size: 40px;
+}
+
+.stopButton {
+    background: rgb(7, 87, 87);
+    height: 40px;
+    border-radius: 50px 50px 50px 50px;
+    width: 70px;
+    line-height: 40px;
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    line-height: 40px;
+    padding-left: 15px;
+}
+
+.stopButton:hover {
+    background: rgba(87, 87, 87, 0.4);
+    color: black;
+}
+
+.stopped {
+    background: rgb(139, 0, 0);
+}
+
+.scanFailed {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: red;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    background: rgb(112, 0, 0, 0.2);
+    width: 100px;
+    justify-content: center;
+    border-radius: 0px 20px 0px 20px;
+    opacity: 0.7;
+}
+
+.scanFailed:hover {
+    opacity: 1
+}
+
+.scanSuccess {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100px;
+    justify-content: center;
+    height: 55px;
+    color: rgb(0, 81, 255);
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    border-radius: 20px 0px 20px 0px;
+    background: rgba(0, 141, 141, 0.45);
+    opacity: 0.7;
+}
+
+.scanSuccess:hover {
+    opacity: 1
+}
+
+.dragUploader {
+    height: 400px;
+}
+
+.uploadPanel {
+    background: rgba(255, 255, 255, 0.3);
+    width: 600px;
+    height: 90vh;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 1s;
+    opacity: 0.3;
+    /* padding: 50px */
+}
+
+.uploadPanel div {
+    /* margin: 15px; */
+}
+
+.dragging {
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 1
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.custom-file-input::before {
+    content: 'Upload';
+    /* display: inline-block; */
+    background: linear-gradient(top, #f9f9f9, #e3e3e3);
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    /* text-shadow: 1px 1px #fff; */
+    font-weight: 700;
+    font-size: 10pt;
+    width: 50px;
+    display: none;
+}
+
+.custom-file-input:hover::before {
+    border-color: black;
+}
+
+.custom-file-input:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+.upload {
+    border: 1px solid #999;
+    padding: 5px 8px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.upload:hover {
+    background: white;
+    color: black
 }
