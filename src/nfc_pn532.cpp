@@ -184,9 +184,5 @@ void nfc_loop(){
                 ",\"5\":" + nfc_data2 + 
                 ",\"6\":" + "\"\""
                 "}";
-    // mqtt_pub(mqtt_data);
-}
-
-void nfc_write(){
-  Serial.println("NFC1 Write Suc.");
+    mqtt_pub(mqtt_data);
 }

@@ -23,12 +23,12 @@ void setup() {
   Serial.println("NFC Begin.");
 
   //wifi init
-  // wifi_init();
-  // Serial.println("Wifi Init.");
+  wifi_init();
+  Serial.println("Wifi Init.");
 
   //mqtt init
-  // mqtt_init("Server", "/server");
-  // Serial.println("MQTT connected");
+  mqtt_init("Server", "/server");
+  Serial.println("MQTT connected");
 }
 
 void loop() {
@@ -44,5 +44,5 @@ void loop() {
 
   //nfc
   nfc_loop();
-  // wifi_mqtt_connect_check();
+  wifi_mqtt_connect_check();
 }
