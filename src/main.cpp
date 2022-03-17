@@ -1,6 +1,7 @@
 #include "nfc_pn532.h"
 #include "wifi_c.h"
 #include "mqtt.h"
+#include "http.h"
 
 u_int p_time = 0;
 
@@ -18,9 +19,9 @@ void setup() {
   Serial.begin(115200);
   Serial.println("Serial Begin.");
 
-  //nfc begin
-  // nfc_begin();
-  Serial.println("NFC Begin.");
+  // //nfc begin
+  // // nfc_begin();
+  // Serial.println("NFC Begin.");
 
   //wifi init
   wifi_init();
@@ -32,15 +33,15 @@ void setup() {
 }
 
 void loop() {
-  // if(millis() - p_time >= 1000) {
-  //   p_time = millis();
-  //   Serial.println("-----------------------" + String(millis()) + "-----------------------");
+  if(millis() - p_time >= 1000) {
+    p_time = millis();
+    Serial.println("-----------------------" + String(millis()) + "-----------------------");
   //   // mqtt_pub("{\"1\":\"\",\"2\":\"\",\"3\":\"{\"name\": \"Countdown14\", \"size\":3}\",\"4\":\"{\"name\": \"Viewco\", \"size\":1}\"");
-  // }
+    wifi_mqtt_connect_check();
+    JSON_decode("s");
+  }
 
   //nfc
   // nfc_loop();
-  mqtt_pub(nfc_reading_combine());
-  wifi_mqtt_connect_check();
-
+  // mqtt_pub(nfc_reading_combine());
 }
