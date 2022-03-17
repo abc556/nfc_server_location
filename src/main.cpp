@@ -19,28 +19,30 @@ void setup() {
   Serial.println("Serial Begin.");
 
   //nfc begin
-  // nfc_begin();
+  nfc_begin();
   Serial.println("NFC Begin.");
 
   //wifi init
-  wifi_init();
-  Serial.println("Wifi Init.");
+  // wifi_init();
+  // Serial.println("Wifi Init.");
 
   //mqtt init
-  mqtt_init("Server", "/server");
-
+  // mqtt_init("Server", "/server");
+  // Serial.println("MQTT connected");
 }
 
 void loop() {
   // if(millis() - p_time >= 1000) {
   //   p_time = millis();
-  //   Serial.println("-----------------------" + String(millis()) + "-----------------------");
-  //   // mqtt_pub("{\"1\":\"\",\"2\":\"\",\"3\":\"{\"name\": \"Countdown14\", \"size\":3}\",\"4\":\"{\"name\": \"Viewco\", \"size\":1}\"");
+  Serial.println("-----------------------");
+  Serial.println(millis() / 1000);
+  // Serial.print("CS1 : ");
+  // Serial.println(digitalRead(CS1));
+  // Serial.print("CS2 : ");
+  // Serial.println(digitalRead(CS2));
   // }
 
   //nfc
-  // nfc_loop();
-  mqtt_pub(nfc_reading_combine());
-  wifi_mqtt_connect_check();
-
+  nfc_loop();
+  // wifi_mqtt_connect_check();
 }

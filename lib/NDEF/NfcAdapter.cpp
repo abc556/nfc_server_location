@@ -18,14 +18,14 @@ void NfcAdapter::begin(boolean verbose)
 
     if (!versiondata)
     {
-        Serial.print(F("Didn't find PN53x board"));
+        // Serial.print(F("Didn't find PN53x board"));
     }
 
     if (verbose)
     {
-        Serial.print(F("Found chip PN5")); Serial.println((versiondata>>24) & 0xFF, HEX);
-        Serial.print(F("Firmware ver. ")); Serial.print((versiondata>>16) & 0xFF, DEC);
-        Serial.print('.'); Serial.println((versiondata>>8) & 0xFF, DEC);
+        // Serial.print(F("Found chip PN5")); Serial.println((versiondata>>24) & 0xFF, HEX);
+        // Serial.print(F("Firmware ver. ")); Serial.print((versiondata>>16) & 0xFF, DEC);
+        // Serial.print('.'); Serial.println((versiondata>>8) & 0xFF, DEC);
     }
     // configure board to read RFID tags
     shield->SAMConfig();

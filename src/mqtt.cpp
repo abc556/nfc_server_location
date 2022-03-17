@@ -2,8 +2,10 @@
 
 WiFiClient espClient;
 PubSubClient mqttclient(espClient);
-const char* mqtt_server = "18.162.55.224";
-uint16_t mqtt_port = 9000;
+// const char* mqtt_server = "18.162.55.224";
+const char* mqtt_server = "muselabs-mqtt.com";
+// uint16_t mqtt_port = 9000;
+uint16_t mqtt_port = 1883;
 String s=";";
 int id = 0;
 char* mqtt_client_name;
