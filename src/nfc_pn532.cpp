@@ -80,6 +80,7 @@ void nfc_loop(){
       }else{
         Serial.println("Write failed.");
       }
+      
     }else {
       nfc_data1 = "\"\"";
       nfc1.begin();
@@ -118,65 +119,6 @@ void nfc_loop(){
       // Serial.println("NFC2 Search Again...");
     }
 
-    // //nfc3
-    // if (nfc3.tagPresent(NFC_TIMEOUT))
-    // {
-    //   NfcTag tag = nfc3.read();
-    //   Serial.println("NFC3:");
-
-    //   if (tag.hasNdefMessage()) // every tag won't have a message
-    //   {
-    //     NdefMessage message = tag.getNdefMessage();
-
-    //     int recordCount = message.getRecordCount();
-    //     for (int i = 0; i < recordCount; i++)
-    //     {
-    //       NdefRecord record = message.getRecord(i);
-
-    //       int payloadLength = record.getPayloadLength();
-    //       byte payload[payloadLength];
-    //       record.getPayload(payload);
-
-    //       nfc_data3 = "";
-    //       for (int c = 0; c < payloadLength; c++) {
-    //         nfc_data3 += (char)payload[c];
-    //       }
-    //       Serial.println(nfc_data3);
-    //     }
-    //   }
-    // }else {
-    //   nfc_data3 = "\"\"";
-    // }
-
-    // //nfc4
-    // if (nfc4.tagPresent(NFC_TIMEOUT))
-    // {
-    //   NfcTag tag = nfc4.read();
-    //   Serial.println("NFC4:");
-
-    //   if (tag.hasNdefMessage()) // every tag won't have a message
-    //   {
-    //     NdefMessage message = tag.getNdefMessage();
-
-    //     int recordCount = message.getRecordCount();
-    //     for (int i = 0; i < recordCount; i++)
-    //     {
-    //       NdefRecord record = message.getRecord(i);
-
-    //       int payloadLength = record.getPayloadLength();
-    //       byte payload[payloadLength];
-    //       record.getPayload(payload);
-
-    //       nfc_data4 = "";
-    //       for (int c = 0; c < payloadLength; c++) {
-    //         nfc_data4 += (char)payload[c];
-    //       }
-    //       Serial.println(nfc_data4);
-    //     }
-    //   }
-    // }else {
-    //   nfc_data4 = "\"\"";
-    // }
     mqtt_data = "{\"1\":" + nfc_data1 + 
                 ",\"2\":" + "\"\""
                 ",\"3\":" + "\"\""
