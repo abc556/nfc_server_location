@@ -3,6 +3,12 @@
         "unordered_map": "cpp",
         "unordered_set": "cpp",
         "initializer_list": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "iterator": "cpp",
+        "__split_buffer": "cpp",
+        "string": "cpp",
+        "deque": "cpp"
     }
 }

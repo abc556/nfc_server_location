@@ -51,6 +51,8 @@ void loop() {
     // Serial.println(http_get("/devices/rdinfo", "501ef728-6e4d-4d8d-b2b4-19ac01fcf96d", true, "admin", "Monit@r#1"));
     // http_post("/devices", serial, true, "admin", "Monit@r#1");
     nfc_loop();
+    updateRackInfoJson();
+    // rackInfoComparison();
   }
 
   //nfc

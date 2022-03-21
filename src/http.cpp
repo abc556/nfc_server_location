@@ -3,7 +3,6 @@
 HTTPClient http;
 // String serverPath = "http://vdc50-4249.op/rest";
 String serverPath = "http://192.168.0.51/rest";
-extern DynamicJsonDocument DCIM_rack_json;
 
 void http_begin()
 {
@@ -71,11 +70,12 @@ int http_post(String api, String jsonString, boolean authRequired=false, String 
     }
 }
 
-DynamicJsonDocument JSON_deserialization(String jsonString)
+void JSON_deserialization(String jsonString)
 {
     DynamicJsonDocument obj(1024);
     deserializeJson(obj, jsonString);
-    return obj;
+    Serial.println(obj["sensor"]);
+    // return obj;
 }
 
 String JSON_serialization(DynamicJsonDocument json)
