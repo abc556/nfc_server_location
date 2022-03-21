@@ -31,5 +31,6 @@
 
 void nfc_begin();
 void nfc_loop();
+void nfc_read();
 
 #endif

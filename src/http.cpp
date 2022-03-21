@@ -1,7 +1,9 @@
 #include <http.h>
 
 HTTPClient http;
-String serverPath = "http://vdc50-4249.op/rest";
+// String serverPath = "http://vdc50-4249.op/rest";
+String serverPath = "http://192.168.0.51/rest";
+extern DynamicJsonDocument DCIM_rack_json;
 
 void http_begin()
 {
@@ -12,11 +14,15 @@ void http_begin()
     }
 }
 
-String http_get(String api, String param)
+String http_get(String api, String param, boolean authRequired=false, String username="", String password="")
 {
-    String fullPath = serverPath + api + param;
+    String fullPath = serverPath + api + "/" + param;
     if(WiFi.status() == WL_CONNECTED){
         http.begin(fullPath.c_str());
+        if(authRequired){
+            String auth = base64::encode(username + ":" + password);
+            http.addHeader("Authorization", "Basic " + auth);
+        }
         int httpResponseCode = http.GET();
         String payload = "{}";
 
@@ -36,7 +42,7 @@ String http_get(String api, String param)
     }
 }
 
-int http_post(String api, int alertId, String content)
+int http_post(String api, String jsonString, boolean authRequired=false, String username="", String password="")
 {
     String fullPath = serverPath + api;
 
@@ -46,9 +52,12 @@ int http_post(String api, int alertId, String content)
 
         http.begin(client, fullPath);
 
-        http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-        String httpRequestData = content;
-
+        http.addHeader("Content-Type", "application/json");
+        String httpRequestData = jsonString;
+        if(authRequired){
+            String auth = base64::encode(username + ":" + password);
+            http.addHeader("Authorization", "Basic " + auth);
+        }
         int httpResponseCode = http.POST(httpRequestData);
 
         Serial.print("HTTP Response code: ");
@@ -62,14 +71,17 @@ int http_post(String api, int alertId, String content)
     }
 }
 
-void JSON_decode(String jsonString)
+DynamicJsonDocument JSON_deserialization(String jsonString)
 {
-    DynamicJsonDocument doc(1024);
+    DynamicJsonDocument obj(1024);
+    deserializeJson(obj, jsonString);
+    return obj;
+}
 
-    deserializeJson(doc, F("{\"sensor\":\"gps\",\"time\":1351824120,"
-                         "\"data\":[48.756080,2.302038]}"));
+String JSON_serialization(DynamicJsonDocument json)
+{
+    String serialString;
+    serializeJson(json, serialString);
+    return serialString;
 
-    JsonObject obj = doc.as<JsonObject>();
-    String sensor = obj[F("sensor")];
-    Serial.println(sensor.c_str());
 }

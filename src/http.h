@@ -1,6 +1,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJSON.h>
+#include <base64.h>
 
 
 void http_begin();

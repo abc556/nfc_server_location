@@ -4,8 +4,10 @@
 // const char* wifi_password = "dg123456";
 // const char* wifi_ssid = "TL23";
 // const char* wifi_password = "P@ss1234";
-const char* wifi_ssid = "trash";
-const char* wifi_password = "12345678";
+// const char* wifi_ssid = "trash";
+// const char* wifi_password = "12345678";
+const char* wifi_ssid = "AEM_Guest";
+const char* wifi_password = "aem36285536";
 
 void wifi_init(){
     WiFi.begin(wifi_ssid, wifi_password);

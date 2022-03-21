@@ -128,3 +128,48 @@ void nfc_loop(){
                 "}";
     mqtt_pub(mqtt_data);
 }
+
+void nfc_read(){
+  String* nfc_readings = new String[12];
+  if (nfc1.tagPresent(NFC_TIMEOUT)) {
+    NfcTag tag = nfc1.read();
+    if (tag.hasNdefMessage()) {
+      NdefMessage message = tag.getNdefMessage();
+      int recordCount = message.getRecordCount();
+      for (int i = 0; i < recordCount; i++) {
+        NdefRecord record = message.getRecord(i);
+        int payloadLength = record.getPayloadLength();
+        byte payload[payloadLength];
+        record.getPayload(payload);
+        nfc_data1 = "";
+        for (int c = 0; c < payloadLength; c++) {
+          nfc_data1 += (char)payload[c];
+        }
+        nfc_readings[0] = nfc_data1;
+      }
+    }
+  } else {
+    nfc_readings[0] = "nonfc";
+  }
+  if (nfc2.tagPresent(NFC_TIMEOUT)) {
+    NfcTag tag = nfc2.read();
+    if (tag.hasNdefMessage()) {
+      NdefMessage message = tag.getNdefMessage();
+      int recordCount = message.getRecordCount();
+      for (int i = 0; i < recordCount; i++) {
+        NdefRecord record = message.getRecord(i);
+        int payloadLength = record.getPayloadLength();
+        byte payload[payloadLength];
+        record.getPayload(payload);
+        nfc_data2 = "";
+        for (int c = 0; c < payloadLength; c++) {
+          nfc_data2 += (char)payload[c];
+        }
+        nfc_readings[1] = nfc_data2;
+      }
+    }
+  } else {
+    nfc_readings[1] = "nonfc";
+  }
+  
+}
