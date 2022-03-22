@@ -37,7 +37,10 @@ void rackInfoAlertChecking(){
     std::vector<int> alert_incorrect_instance_array;
     std::vector<int> alert_redundant_nfc_array;
     String reader_result = "";
+    // String nfc_uid = "";
     reader_result = nfc1_read();
+    Serial.println("nfc1_uuid");
+    Serial.println(nfc1_uid());
     nfc_reader_idx = 0;
     supposed_instance_idx = reader_correct_idx[nfc_reader_idx];
     if( supposed_instance_idx != -1) {

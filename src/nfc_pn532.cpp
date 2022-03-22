@@ -175,6 +175,15 @@ void nfc_read(){
   }
 }
 
+String nfc1_uid(){
+  if (nfc1.tagPresent(NFC_TIMEOUT)){
+    NfcTag tag = nfc1.read();
+    return tag.getUidString();
+  } else {
+    return "no uid detected";
+  }
+}
+
 String nfc1_read(){
   String nfc_data = "";
   if (nfc1.tagPresent(NFC_TIMEOUT)) {

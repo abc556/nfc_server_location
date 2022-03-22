@@ -35,6 +35,7 @@ extern const int reader_count;
 void nfc_begin();
 void nfc_loop();
 void nfc_read();
+String nfc1_uid();
 String nfc1_read();
 String nfc2_read();
 String nfc3_read();
