@@ -1,5 +1,7 @@
 #include <string>
 #include <vector>
+#include <array>
+#include <iostream>
 #include "nfc_pn532.h"
 #include "wifi_c.h"
 #include "http.h"

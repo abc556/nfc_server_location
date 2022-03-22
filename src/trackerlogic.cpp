@@ -36,9 +36,9 @@ void rackInfoAlertChecking(){
     int nfc_reader_idx = 0;
     int supposed_instance_idx = 0;
     String rack_info = "";
-    std::vector<int> alert_missing_array;
-    std::vector<int> alert_incorrect_array;
-    std::vector<int> alert_redundant_array;
+    std::vector<int> alert_missing_instance_array;
+    std::vector<int> alert_incorrect_instance_array;
+    std::vector<int> alert_redundant_nfc_array;
     String reader_result = "";
 
     reader_result = nfc1_read();
@@ -46,19 +46,19 @@ void rackInfoAlertChecking(){
     supposed_instance_idx = reader_correct_idx[nfc_reader_idx];
     if( supposed_instance_idx != -1) {
         if (reader_result == "nonfc") {
-            alert_missing_array.push_back(supposed_instance_idx);
+            alert_missing_instance_array.push_back(supposed_instance_idx);
         } else {
             String rack_info = "";
             serializeJson(rack_json["data"][supposed_instance_idx], rack_info);
             Serial.println(rack_info);
             if (reader_result != rack_info) {
                 // nfc1_write(rack_info);
-                alert_incorrect_array.push_back(supposed_instance_idx);
+                alert_incorrect_instance_array.push_back(supposed_instance_idx);
             }
         }
     } else {
         if (reader_result != "") {
-            alert_redundant_array.push_back(nfc_reader_idx);
+            alert_redundant_nfc_array.push_back(nfc_reader_idx);
         }
     }
     reader_result = nfc2_read();
@@ -66,108 +66,62 @@ void rackInfoAlertChecking(){
     supposed_instance_idx = reader_correct_idx[nfc_reader_idx];
     if( supposed_instance_idx != -1) {
         if (reader_result == "nonfc") {
-            alert_missing_array.push_back(supposed_instance_idx);
+            alert_missing_instance_array.push_back(supposed_instance_idx);
         } else {
             String rack_info = "";
             serializeJson(rack_json["data"][supposed_instance_idx], rack_info);
             Serial.println(rack_info);
             if (reader_result != rack_info) {
                 nfc2_write(rack_info);
-                alert_incorrect_array.push_back(supposed_instance_idx);
+                alert_incorrect_instance_array.push_back(supposed_instance_idx);
             }
         }
     } else {
         if (reader_result != "") {
-            alert_redundant_array.push_back(nfc_reader_idx);
+            alert_redundant_nfc_array.push_back(nfc_reader_idx);
         }
     }
-
-    // reader_result = nfc3_read();
-    // nfc_reader_idx = 2;
-    // supposed_instance_idx = reader_correct_idx[nfc_reader_idx];
-    // if( supposed_instance_idx != -1) {
-    //     if (reader_result == "nonfc") {
-    //         alert_missing_array.push_back(supposed_instance_idx);
-    //     } else {
-    //         rack_info = rack_json["data"][supposed_instance_idx];
-    //         if (reader_result != rack_info) {
-    //             nfc3_write(rack_info);
-    //             alert_incorrect_array.push_back(supposed_instance_idx);
-    //         }
-    //     }
-    // } else {
-    //     if (reader_result != "") {
-    //         alert_redundant_array.push_back(nfc_reader_idx);
-    //     }
-    // }
-    // reader_result = nfc4_read();
-    // nfc_reader_idx = 3;
-    // supposed_instance_idx = reader_correct_idx[nfc_reader_idx];
-    // if( supposed_instance_idx != -1) {
-    //     if (reader_result == "nonfc") {
-    //         alert_missing_array.push_back(supposed_instance_idx);
-    //     } else {
-    //         rack_info = rack_json["data"][supposed_instance_idx];
-    //         if (reader_result != rack_info) {
-    //             nfc4_write(rack_info);
-    //             alert_incorrect_array.push_back(supposed_instance_idx);
-    //         }
-    //     }
-    // } else {
-    //     if (reader_result != "") {
-    //         alert_redundant_array.push_back(nfc_reader_idx);
-    //     }
-    // }
-    // reader_result = nfc5_read();
-    // nfc_reader_idx = 4;
-    // supposed_instance_idx = reader_correct_idx[nfc_reader_idx];
-    // if( supposed_instance_idx != -1) {
-    //     if (reader_result == "nonfc") {
-    //         alert_missing_array.push_back(supposed_instance_idx);
-    //     } else {
-    //         rack_info = rack_json["data"][supposed_instance_idx];
-    //         if (reader_result != rack_info) {
-    //             nfc5_write(rack_info);
-    //             alert_incorrect_array.push_back(supposed_instance_idx);
-    //         }
-    //     }
-    // } else {
-    //     if (reader_result != "") {
-    //         alert_redundant_array.push_back(nfc_reader_idx);
-    //     }
-    // }
-    // reader_result = nfc6_read();
-    // nfc_reader_idx = 5;
-    // supposed_instance_idx = reader_correct_idx[nfc_reader_idx];
-    // if( supposed_instance_idx != -1) {
-    //     if (reader_result == "nonfc") {
-    //         alert_missing_array.push_back(supposed_instance_idx);
-    //     } else {
-    //         rack_info = rack_json["data"][supposed_instance_idx];
-    //         if (reader_result != rack_info) {
-    //             nfc6_write(rack_info);
-    //             alert_incorrect_array.push_back(supposed_instance_idx);
-    //         }
-    //     }
-    // } else {
-    //     if (reader_result != "") {
-    //         alert_redundant_array.push_back(nfc_reader_idx);
-    //     }
-    // }
     
-    if (alert_missing_array.size() > 0) {
-        int arr[alert_missing_array.size()];
-        std::copy(alert_missing_array.begin(), alert_missing_array.end(), arr);
+    if (alert_missing_instance_array.size() > 0) {
+        int arr[alert_missing_instance_array.size()];
+        std::copy(alert_missing_instance_array.begin(), alert_missing_instance_array.end(), arr);
+        DynamicJsonDocument alert_json(1024);
+        alert_json["id"] = 3;
+        for (int i = 0; i < alert_missing_instance_array.size(); i++) {
+            alert_json["content"][i] = rack_json["data"][arr[i]]["id"];
+        }
+        String alert_string = "";
+        serializeJson(alert_json, alert_string);
+        Serial.println("Missing: ");
+        Serial.println(alert_string);
         // mqtt publish alert missing
     }
-    if (alert_incorrect_array.size() > 0) {
-        int arr[alert_incorrect_array.size()];
-        std::copy(alert_incorrect_array.begin(), alert_incorrect_array.end(), arr);
+    if (alert_incorrect_instance_array.size() > 0) {
+        int arr[alert_incorrect_instance_array.size()];
+        std::copy(alert_incorrect_instance_array.begin(), alert_incorrect_instance_array.end(), arr);
+        DynamicJsonDocument alert_json(1024);
+        alert_json["id"] = 3;
+        for (int i = 0; i < alert_incorrect_instance_array.size(); i++) {
+            alert_json["content"][i] = rack_json["data"][arr[i]]["id"];
+        }
+        String alert_string = "";
+        serializeJson(alert_json, alert_string);
+        Serial.println("Incorrect: ");
+        Serial.println(alert_string);
         // mqtt publish alert incorrect
     }
-    if (alert_redundant_array.size() > 0) {
-        int arr[alert_redundant_array.size()];
-        std::copy(alert_redundant_array.begin(), alert_redundant_array.end(), arr);
+    if (alert_redundant_nfc_array.size() > 0) {
+        int arr[alert_redundant_nfc_array.size()];
+        std::copy(alert_redundant_nfc_array.begin(), alert_redundant_nfc_array.end(), arr);
+        DynamicJsonDocument alert_json(1024);
+        alert_json["id"] = 3;
+        for (int i = 0; i < alert_redundant_nfc_array.size(); i++) {
+            alert_json["content"][i] = arr[i]+1;
+        }
+        String alert_string = "";
+        serializeJson(alert_json, alert_string);
+        Serial.println("Redundant: ");
+        Serial.println(alert_string);
         // mqtt publish alert redundant 
     }
 }
