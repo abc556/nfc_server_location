@@ -16,7 +16,7 @@
 
 #define NFC_TIMEOUT 500
 
-extern int reader_count;
+extern const int reader_count;
 
 #include <SPI.h>
 #include <PN532_SPI.h>

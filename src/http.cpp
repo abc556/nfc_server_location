@@ -70,12 +70,11 @@ int http_post(String api, String jsonString, boolean authRequired=false, String 
     }
 }
 
-void JSON_deserialization(String jsonString)
+DynamicJsonDocument JSON_deserialization(String jsonString)
 {
     DynamicJsonDocument obj(1024);
     deserializeJson(obj, jsonString);
-    Serial.println(obj["sensor"]);
-    // return obj;
+    return obj;
 }
 
 String JSON_serialization(DynamicJsonDocument json)

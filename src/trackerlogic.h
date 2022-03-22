@@ -2,8 +2,8 @@
 #include "wifi_c.h"
 #include "http.h"
 
-extern DynamicJsonDocument rack_json(1024);
-extern int reader_correct_idx [reader_count];
+// extern DynamicJsonDocument rack_json(1024);
+extern int reader_correct_idx [2];
 extern int min_U;
 
 void updateRackInfoJson();

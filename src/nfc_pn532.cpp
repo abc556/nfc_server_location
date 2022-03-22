@@ -1,8 +1,7 @@
 #include "nfc_pn532.h"
 #include "mqtt.h"
 
-extern reader_count = 2;
-extern
+extern const int reader_count = 2;
 
 PN532_SPI pn532spi1(SPI, CS1);
 PN532_SPI pn532spi2(SPI, CS2);
@@ -177,7 +176,7 @@ void nfc_read(){
 }
 
 String nfc1_read(){
-  String nfc_data = ""
+  String nfc_data = "";
   if (nfc1.tagPresent(NFC_TIMEOUT)) {
     NfcTag tag = nfc1.read();
     if (tag.hasNdefMessage()) {
@@ -200,7 +199,7 @@ String nfc1_read(){
 }
 
 String nfc2_read(){
-  String nfc_data = ""
+  String nfc_data = "";
   if (nfc2.tagPresent(NFC_TIMEOUT)) {
     NfcTag tag = nfc2.read();
     if (tag.hasNdefMessage()) {
@@ -222,94 +221,94 @@ String nfc2_read(){
   }
 }
 
-String nfc3_read(){
-  String nfc_data = ""
-  if (nfc3.tagPresent(NFC_TIMEOUT)) {
-    NfcTag tag = nfc3.read();
-    if (tag.hasNdefMessage()) {
-      NdefMessage message = tag.getNdefMessage();
-      int recordCount = message.getRecordCount();
-      for (int i = 0; i < recordCount; i++) {
-        NdefRecord record = message.getRecord(i);
-        int payloadLength = record.getPayloadLength();
-        byte payload[payloadLength];
-        record.getPayload(payload);
-        for (int c = 0; c < payloadLength; c++) {
-          nfc_data += (char)payload[c];
-        }
-        return nfc_data;
-      }
-    }
-  } else {
-    return "nonfc";
-  }
-}
+// String nfc3_read(){
+//   String nfc_data = "";
+//   if (nfc3.tagPresent(NFC_TIMEOUT)) {
+//     NfcTag tag = nfc3.read();
+//     if (tag.hasNdefMessage()) {
+//       NdefMessage message = tag.getNdefMessage();
+//       int recordCount = message.getRecordCount();
+//       for (int i = 0; i < recordCount; i++) {
+//         NdefRecord record = message.getRecord(i);
+//         int payloadLength = record.getPayloadLength();
+//         byte payload[payloadLength];
+//         record.getPayload(payload);
+//         for (int c = 0; c < payloadLength; c++) {
+//           nfc_data += (char)payload[c];
+//         }
+//         return nfc_data;
+//       }
+//     }
+//   } else {
+//     return "nonfc";
+//   }
+// }
 
-String nfc4_read(){
-  String nfc_data = ""
-  if (nfc4.tagPresent(NFC_TIMEOUT)) {
-    NfcTag tag = nfc4.read();
-    if (tag.hasNdefMessage()) {
-      NdefMessage message = tag.getNdefMessage();
-      int recordCount = message.getRecordCount();
-      for (int i = 0; i < recordCount; i++) {
-        NdefRecord record = message.getRecord(i);
-        int payloadLength = record.getPayloadLength();
-        byte payload[payloadLength];
-        record.getPayload(payload);
-        for (int c = 0; c < payloadLength; c++) {
-          nfc_data += (char)payload[c];
-        }
-        return nfc_data;
-      }
-    }
-  } else {
-    return "nonfc";
-  }
-}
+// String nfc4_read(){
+//   String nfc_data = "";
+//   if (nfc4.tagPresent(NFC_TIMEOUT)) {
+//     NfcTag tag = nfc4.read();
+//     if (tag.hasNdefMessage()) {
+//       NdefMessage message = tag.getNdefMessage();
+//       int recordCount = message.getRecordCount();
+//       for (int i = 0; i < recordCount; i++) {
+//         NdefRecord record = message.getRecord(i);
+//         int payloadLength = record.getPayloadLength();
+//         byte payload[payloadLength];
+//         record.getPayload(payload);
+//         for (int c = 0; c < payloadLength; c++) {
+//           nfc_data += (char)payload[c];
+//         }
+//         return nfc_data;
+//       }
+//     }
+//   } else {
+//     return "nonfc";
+//   }
+// }
 
-String nfc5_read(){
-  String nfc_data = ""
-  if (nfc5.tagPresent(NFC_TIMEOUT)) {
-    NfcTag tag = nfc5.read();
-    if (tag.hasNdefMessage()) {
-      NdefMessage message = tag.getNdefMessage();
-      int recordCount = message.getRecordCount();
-      for (int i = 0; i < recordCount; i++) {
-        NdefRecord record = message.getRecord(i);
-        int payloadLength = record.getPayloadLength();
-        byte payload[payloadLength];
-        record.getPayload(payload);
-        for (int c = 0; c < payloadLength; c++) {
-          nfc_data += (char)payload[c];
-        }
-        return nfc_data;
-      }
-    }
-  } else {
-    return "nonfc";
-  }
-}
+// String nfc5_read(){
+//   String nfc_data = "";
+//   if (nfc5.tagPresent(NFC_TIMEOUT)) {
+//     NfcTag tag = nfc5.read();
+//     if (tag.hasNdefMessage()) {
+//       NdefMessage message = tag.getNdefMessage();
+//       int recordCount = message.getRecordCount();
+//       for (int i = 0; i < recordCount; i++) {
+//         NdefRecord record = message.getRecord(i);
+//         int payloadLength = record.getPayloadLength();
+//         byte payload[payloadLength];
+//         record.getPayload(payload);
+//         for (int c = 0; c < payloadLength; c++) {
+//           nfc_data += (char)payload[c];
+//         }
+//         return nfc_data;
+//       }
+//     }
+//   } else {
+//     return "nonfc";
+//   }
+// }
 
-String nfc6_read(){
-  String nfc_data = ""
-  if (nfc6.tagPresent(NFC_TIMEOUT)) {
-    NfcTag tag = nfc6.read();
-    if (tag.hasNdefMessage()) {
-      NdefMessage message = tag.getNdefMessage();
-      int recordCount = message.getRecordCount();
-      for (int i = 0; i < recordCount; i++) {
-        NdefRecord record = message.getRecord(i);
-        int payloadLength = record.getPayloadLength();
-        byte payload[payloadLength];
-        record.getPayload(payload);
-        for (int c = 0; c < payloadLength; c++) {
-          nfc_data += (char)payload[c];
-        }
-        return nfc_data;
-      }
-    }
-  } else {
-    return "nonfc";
-  }
-}
+// String nfc6_read(){
+//   String nfc_data = "";
+//   if (nfc6.tagPresent(NFC_TIMEOUT)) {
+//     NfcTag tag = nfc6.read();
+//     if (tag.hasNdefMessage()) {
+//       NdefMessage message = tag.getNdefMessage();
+//       int recordCount = message.getRecordCount();
+//       for (int i = 0; i < recordCount; i++) {
+//         NdefRecord record = message.getRecord(i);
+//         int payloadLength = record.getPayloadLength();
+//         byte payload[payloadLength];
+//         record.getPayload(payload);
+//         for (int c = 0; c < payloadLength; c++) {
+//           nfc_data += (char)payload[c];
+//         }
+//         return nfc_data;
+//       }
+//     }
+//   } else {
+//     return "nonfc";
+//   }
+// }

@@ -52,6 +52,7 @@ void loop() {
     // http_post("/devices", serial, true, "admin", "Monit@r#1");
     nfc_loop();
     updateRackInfoJson();
+    updateSupposedReadings(38);
     // rackInfoComparison();
   }
 
