@@ -314,21 +314,30 @@ String nfc2_read(){
 // }
 
 void nfc1_write(String content) {
-  NdefMessage message = NdefMessage();
-  message.addTextRecord("Hello, Arduino!");
-  if(nfc1.write(message)){
-    Serial.println("Write success.");
-  }else{
-    Serial.println("Write failed.");
+  if (nfc1.tagPresent(NFC_TIMEOUT)) {
+    NdefMessage message = NdefMessage();
+    message.addTextRecord(content);
+    if(nfc1.write(message)){
+      Serial.println("Write success.");
+    }else{
+      Serial.println("Write failed.");
+    }
+  } else {
+    Serial.println("nfc tag not exist, cant write");
   }
 }
 
 void nfc2_write(String content) {
-  NdefMessage message = NdefMessage();
-  message.addTextRecord("Hello, Arduino!");
-  if(nfc2.write(message)){
-    Serial.println("Write success.");
-  }else{
-    Serial.println("Write failed.");
+  if (nfc2.tagPresent(NFC_TIMEOUT)) {
+    NdefMessage message = NdefMessage();
+    message.addTextRecord(content);
+    if(nfc2.write(message)){
+      Serial.println("Write success.");
+    }else{
+      Serial.println("Write failed.");
+    }
+  } else {
+    Serial.println("nfc tag not exist, cant write");
   }
+  
 }

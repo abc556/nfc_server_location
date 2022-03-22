@@ -5,7 +5,7 @@
 
 
 void http_begin();
-String http_get(String api, String input);
-int http_post(String api, String input);
+String http_get(String api, String input, boolean authRequired, String username, String password);
+int http_post(String api, String input, boolean authRequired, String username, String password);
 DynamicJsonDocument JSON_deserialization(String jsonString);
 String JSON_serialization(DynamicJsonDocument json);

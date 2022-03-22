@@ -201,6 +201,7 @@ void NdefMessage::addTextRecord(String text, String encoding)
     // TODO is it more efficient to build w/o string concatenation?
     String payloadString = "X" + encoding + text;
 
+
     byte payload[payloadString.length() + 1];
     payloadString.getBytes(payload, sizeof(payload));
 
