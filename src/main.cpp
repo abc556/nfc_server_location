@@ -3,6 +3,7 @@
 #include "mqtt.h"
 #include "http.h"
 #include "trackerlogic.h"
+#include "iostream"
 
 u_int p_time = 0;
 
@@ -50,9 +51,10 @@ void loop() {
     // serial = "{\"id\":\"cd4df3b8-2b9d-4aae-b047-85181022cefa\",\"model_id\":\"5f50592c-44e2-11de-9ac7-000d566af2f2\",\"name\":\"NFC server demo\",\"description\":\"test\",\"attributes\":[{\"id\":\"0aeddd86-ce3c-11dd-8da6-001d091dd9dd\",\"name\":\"asset_tag\",\"value\":\""+String(millis())+"\"}]}";
     // Serial.println(http_get("/devices/rdinfo", "501ef728-6e4d-4d8d-b2b4-19ac01fcf96d", true, "admin", "Monit@r#1"));
     // http_post("/devices", serial, true, "admin", "Monit@r#1");
-    nfc_loop();
+    // nfc_loop();
     updateRackInfoJson();
     updateSupposedReadings(38);
+    rackInfoAlertChecking();
     // rackInfoComparison();
   }
 

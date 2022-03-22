@@ -312,3 +312,23 @@ String nfc2_read(){
 //     return "nonfc";
 //   }
 // }
+
+void nfc1_write(String content) {
+  NdefMessage message = NdefMessage();
+  message.addTextRecord("Hello, Arduino!");
+  if(nfc1.write(message)){
+    Serial.println("Write success.");
+  }else{
+    Serial.println("Write failed.");
+  }
+}
+
+void nfc2_write(String content) {
+  NdefMessage message = NdefMessage();
+  message.addTextRecord("Hello, Arduino!");
+  if(nfc2.write(message)){
+    Serial.println("Write success.");
+  }else{
+    Serial.println("Write failed.");
+  }
+}
