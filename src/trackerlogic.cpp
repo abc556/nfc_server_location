@@ -1,14 +1,24 @@
 #include "trackerlogic.h"
 
+const String http_username = "admin";
+const String http_password = "Monit@r#1";
 
 int u_interval = 2;
 DynamicJsonDocument rack_json(10240);
 int reader_correct_idx [2] = { -1 };
 
+const int ALERT_THRESHOLD = 3;
+
+int nfc1_count_missing = 0;
+int nfc1_count_incorrect = 0;
+int nfc1_count_redundant = 0;
+int nfc2_count_missing = 0;
+int nfc2_count_incorrect = 0;
+int nfc2_count_redundant = 0;
+
 void updateRackInfoJson(){
-    String content = http_get("/devices/rdinfo", "501ef728-6e4d-4d8d-b2b4-19ac01fcf96d", true, "admin", "Monit@r#1");
+    String content = http_get("/devices/rdinfo", "501ef728-6e4d-4d8d-b2b4-19ac01fcf96d", true, http_username, http_password);
     // String content = "{\"code\": \"1\",\"data\": [{\"description\": \"test\",\"mid\": \"5f50592c-44e2-11de-9ac7-000d566af2f2\",\"upos\": 40.0,\"pid\": \"ca7391ec-d002-11dd-8252-001d091dd9dd\",\"mname\": \"2950III\",\"acl\": 15,\"tid\": \"59e3262e-cd7b-11dd-81bf-001d091dd9dd\",\"sid\": 21115,\"vid\": \"6b16fb0e-cd81-11dd-83bf-001d091dd9dd\",\"is_reserved\": false,\"wo\": false,\"id\": \"cd4df3b8-2b9d-4aae-b047-85181022cefa\",\"sn\": null,\"eups\": null,\"owner\": null,\"side\": \"\",\"enclourse\": null,\"pname\": \"PowerEdge\",\"status_name\": \"Operational\",\"ip\": null,\"tname\": \"Server - Rackmount\",\"psid\": 1670,\"tsid\": 533,\"vsid\": 246,\"shelf\": null,\"msid\": 28436,\"slots\": null,\"vname\": \"Dell\",\"at\": \"at123456\",\"reserved\": false,\"name\": \"NFC server demo\",\"_id\": \"cd4df3b8-2b9d-4aae-b047-85181022cefa\",\"position\": \"40.0 U\",\"_pid_\": null,\"_is_child_\": false,\"status\": 1},{\"description\": null,\"mid\": \"9d2b566a-d52d-11ea-bf0d-b32c7d6d75cf\",\"upos\": 38.0,\"pid\": \"ca7391ec-d002-11dd-8252-001d091dd9dd\",\"mname\": \"R740xd (12D 3.5)\",\"acl\": 15,\"tid\": \"59e3262e-cd7b-11dd-81bf-001d091dd9dd\",\"sid\": 21116,\"vid\": \"6b16fb0e-cd81-11dd-83bf-001d091dd9dd\",\"is_reserved\": false,\"wo\": false,\"id\": \"032d6098-a43e-4d67-8def-2f2f5e823158\",\"sn\": null,\"eups\": null,\"owner\": null,\"side\": \"\",\"enclourse\": null,\"pname\": \"PowerEdge\",\"status_name\": \"Operatjoinional\",\"ip\": null,\"tname\": \"Server - Rackmount\",\"psid\": 1670,\"tsid\": 533,\"vsid\": 246,\"shelf\": null,\"msid\": 54715,\"slots\": null,\"vname\": \"Dell\",\"at\": null,\"reserved\": false,\"name\": \"NFC Server Demo -1\",\"_id\": \"032d6098-a43e-4d67-8def-2f2f5e823158\",\"position\": \"38.0 U\",\"_pid_\": null,\"_is_child_\": false,\"status\": 1}],\"message\": \"Success\"}";
-    // String content = "{\"sensor\":\"gps\",\"time\":1351824120,\"data\":[48.756080,2.302038]}";
     deserializeJson(rack_json, content);
 }
 
@@ -37,40 +47,61 @@ void rackInfoAlertChecking(){
     std::vector<int> alert_incorrect_instance_array;
     std::vector<int> alert_redundant_nfc_array;
     String reader_result = "";
-    // String nfc_uid = "";
+    
+    // nfc reader 1
     reader_result = nfc1_read();
-    Serial.println("nfc1_uuid");
-    Serial.println(nfc1_uid());
     nfc_reader_idx = 0;
     supposed_instance_idx = reader_correct_idx[nfc_reader_idx];
-    if( supposed_instance_idx != -1) {
-        if (reader_result == "nonfc") {
-            Serial.println("no nfc1");
-            alert_missing_instance_array.push_back(supposed_instance_idx);
+    if( supposed_instance_idx != -1) { // supposed to have nfc/server being detected
+        if (reader_result == "NO_NFC") { // !nfc.tagPresent(...)
+            if (nfc1_count_missing >= ALERT_THRESHOLD) {
+                Serial.println("Reader " + (nfc_reader_idx+1) + ": no nfc sticker");
+                alert_missing_instance_array.push_back(supposed_instance_idx);
+            } else {
+                nfc1_count_missing++;
+            }
         } else {
+            Serial.println("Reader " + (nfc_reader_idx+1) + ": sticker exists");
+            nfc1_count_missing = 0;
             String instance_id = rack_json["data"][supposed_instance_idx]["id"];
-            if (reader_result.indexOf(instance_id) == -1) {
-                nfc1_write(instance_id);
-                alert_incorrect_instance_array.push_back(supposed_instance_idx);
+            if (reader_result.indexOf(instance_id) == -1) { // instance/server id does not exist(match) in nfc sticker
+                if (nfc1_count_incorrect >= ALERT_THRESHOLD) {
+                    Serial.println("Reader " + (nfc_reader_idx+1) + ": incorrect sticker contetnt (server id)");
+                    nfc1_write(instance_id);
+                    alert_incorrect_instance_array.push_back(supposed_instance_idx);
+                    postServerAssetTag(nfc1_getuid());
+                } else {
+                    nfc1_count_incorrect++;
+                }
+            } else {
+                nfc1_count_incorrect = 0;
             }
         }
-    } else {
-        if (reader_result != "") {
-            alert_redundant_nfc_array.push_back(nfc_reader_idx);
+    } else { // not supposed to have nfc/server being detected
+        if (reader_result != "NO_NFC") {
+            if (nfc1_count_redundant >= ALERT_THRESHOLD) {
+                alert_redundant_nfc_array.push_back(nfc_reader_idx);
+            } else {
+                nfc1_count_redundant++
+            }
+        } else {
+            nfc1_count_redundant = 0;
         }
     }
+    // nfc reader 2
     reader_result = nfc2_read();
     nfc_reader_idx = 1;
     supposed_instance_idx = reader_correct_idx[nfc_reader_idx];
     if( supposed_instance_idx != -1) {
-        if (reader_result == "nonfc") {
-            Serial.println("no nfc2");
+        if (reader_result == "NO_NFC") {
+            Serial.println("No nfc2");
             alert_missing_instance_array.push_back(supposed_instance_idx);
         } else {
             String instance_id = rack_json["data"][supposed_instance_idx]["id"];
             if (reader_result.indexOf(instance_id) == -1) {
                 nfc2_write(instance_id);
                 alert_incorrect_instance_array.push_back(supposed_instance_idx);
+                postServerAssetTag(nfc2_getuid());
             }
         }
     } else {
@@ -121,4 +152,20 @@ void rackInfoAlertChecking(){
         Serial.println(alert_string);
         mqtt_pub(alert_string);
     }
+}
+
+void postServerAssetTag(String id, String uuid) {
+    DynamicJsonDocument attribute_json(1024);
+    attribute_json["id"] = id;
+    attribute_json["name"] = "asset_tag";
+    attribute_json["value"] = nfc_uid;
+    DynamicJsonDocument post_json(1024);
+    post_json["id"] = "cd4df3b8-2b9d-4aae-b047-85181022cefa";
+    post_json["model_id"] = "5f50592c-44e2-11de-9ac7-000d566af2f2";
+    post_json["name"] = "NFC server demo";
+    post_json["description"] = "test";
+    post_json["attributes"] = attribute_json;
+    String post_serial = "";
+    serializeJson(post_json, post_serial);
+    http_post("/devices", post_serial, true, http_username, http_password);
 }

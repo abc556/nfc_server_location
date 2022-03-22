@@ -31,11 +31,23 @@ extern const int reader_count;
 // PN532_I2C pn532_i2c(Wire);
 // NfcAdapter nfc = NfcAdapter(pn532_i2c);
 
+extern String nfc1_uid;
+extern String nfc2_uid;
+extern String nfc3_uid;
+extern String nfc4_uid;
+extern String nfc5_uid;
+extern String nfc6_uid;
+
 
 void nfc_begin();
 void nfc_loop();
 void nfc_read();
-String nfc1_uid();
+String nfc1_getuid();
+String nfc2_getuid();
+String nfc3_getuid();
+String nfc4_getuid();
+String nfc5_getuid();
+String nfc6_getuid();
 String nfc1_read();
 String nfc2_read();
 String nfc3_read();

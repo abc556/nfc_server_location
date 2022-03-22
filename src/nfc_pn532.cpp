@@ -19,6 +19,13 @@ String nfc_data2 = "0";
 // String nfc_data3 = "0";
 // String nfc_data4 = "0";
 
+String nfc1_uid = "";
+String nfc2_uid = "";
+String nfc3_uid = "";
+String nfc4_uid = "";
+String nfc5_uid = "";
+String nfc6_uid = "";
+
 void nfc_begin(){
     nfc1.begin();
     nfc2.begin();
@@ -175,20 +182,24 @@ void nfc_read(){
   }
 }
 
-String nfc1_uid(){
-  if (nfc1.tagPresent(NFC_TIMEOUT)){
-    NfcTag tag = nfc1.read();
-    return tag.getUidString();
-  } else {
-    return "no uid detected";
-  }
+String nfc1_getuid(){
+  // if (nfc1.tagPresent(NFC_TIMEOUT)){
+  //   NfcTag tag = nfc1.read();
+  //   return tag.getUidString();
+  // } else {
+  //   return "no uid detected";
+  // }
+  return nfc1_uid;
 }
+
+String nfc2_getuid(){ return nfc2_uid; }
 
 String nfc1_read(){
   String nfc_data = "";
   if (nfc1.tagPresent(NFC_TIMEOUT)) {
     NfcTag tag = nfc1.read();
     if (tag.hasNdefMessage()) {
+      nfc1_uid = tag.getUidString();
       NdefMessage message = tag.getNdefMessage();
       int recordCount = message.getRecordCount();
       for (int i = 0; i < recordCount; i++) {
@@ -212,6 +223,7 @@ String nfc2_read(){
   if (nfc2.tagPresent(NFC_TIMEOUT)) {
     NfcTag tag = nfc2.read();
     if (tag.hasNdefMessage()) {
+      nfc2_uid = tag.getUidString();
       NdefMessage message = tag.getNdefMessage();
       int recordCount = message.getRecordCount();
       for (int i = 0; i < recordCount; i++) {
