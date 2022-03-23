@@ -10,7 +10,7 @@ String s=";";
 int id = 0;
 char* mqtt_client_name;
 
-char* MQTT_TOPIC_SERVER = "/server";
+char* MQTT_TOPIC_SERVER = "/tracker/501ef728-6e4d-4d8d-b2b4-19ac01fcf96d/alert";
 
 void mqtt_connect(){
     mqttclient.connect(mqtt_client_name);

@@ -8,8 +8,6 @@
 #include "mqtt.h"
 
 
-// extern DynamicJsonDocument rack_json(1024);
-extern int reader_correct_idx [2];
 extern int u_interval;
 
 void updateRackInfoJson();

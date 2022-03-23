@@ -3,7 +3,7 @@
 
 #define CS1 4
 #define CS2 5
-#define CS3 12
+#define CS3 16
 #define CS4 13
 #define CS5 14
 #define CS6 21
@@ -14,9 +14,9 @@
 #define CS11 32
 #define CS12 33
 
-#define NFC_TIMEOUT 500
+#define NFC_TIMEOUT 200
 
-extern const int reader_count;
+extern const int READER_COUNT;
 
 #include <SPI.h>
 #include <PN532_SPI.h>

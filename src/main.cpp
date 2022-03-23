@@ -33,7 +33,7 @@ void setup() {
   Serial.println("Wifi Init.");
 
   //mqtt init
-  mqtt_init("Server", "/server");
+  mqtt_init("Server", "/tracker/501ef728-6e4d-4d8d-b2b4-19ac01fcf96d/alert");
   Serial.println("MQTT connected");
 }
 
@@ -53,7 +53,7 @@ void loop() {
     // http_post("/devices", serial, true, "admin", "Monit@r#1");
     // nfc_loop();
     updateRackInfoJson();
-    updateSupposedReadings(38);
+    updateSupposedReadings(26);
     rackInfoAlertChecking();
     // rackInfoComparison();
   }

@@ -1,18 +1,18 @@
 #include "nfc_pn532.h"
 #include "mqtt.h"
 
-const int reader_count = 2;
+const int READER_COUNT = 5;
 
 PN532_SPI pn532spi1(SPI, CS1);
 PN532_SPI pn532spi2(SPI, CS2);
-// PN532_SPI pn532spi3(SPI, CS3);
-// PN532_SPI pn532spi4(SPI, CS4);
-// PN532_SPI pn532spi5(SPI, CS5);
+PN532_SPI pn532spi3(SPI, CS3);
+PN532_SPI pn532spi4(SPI, CS4);
+PN532_SPI pn532spi5(SPI, CS5);
 NfcAdapter nfc1 = NfcAdapter(pn532spi1);
 NfcAdapter nfc2 = NfcAdapter(pn532spi2);
-// NfcAdapter nfc3 = NfcAdapter(pn532spi3);
-// NfcAdapter nfc4 = NfcAdapter(pn532spi4);
-// NfcAdapter nfc5 = NfcAdapter(pn532spi5);
+NfcAdapter nfc3 = NfcAdapter(pn532spi3);
+NfcAdapter nfc4 = NfcAdapter(pn532spi4);
+NfcAdapter nfc5 = NfcAdapter(pn532spi5);
 
 String mqtt_data = "";
 
@@ -31,9 +31,9 @@ String nfc6_uid = "";
 void nfc_begin(){
     nfc1.begin();
     nfc2.begin();
-    // nfc3.begin();
-    // nfc4.begin();
-    // nfc5.begin();
+    nfc3.begin();
+    nfc4.begin();
+    nfc5.begin();
 }
 
 //R/W 讀卡器模式
@@ -233,77 +233,77 @@ String nfc2_read(){
   }
 }
 
-// String nfc3_read(){
-//   String nfc_data = "";
-//   if (nfc3.tagPresent(NFC_TIMEOUT)) {
-//     NfcTag tag = nfc3.read();
-//     if (tag.hasNdefMessage()) {
-//       nfc3_uid = tag.getUidString();
-//       NdefMessage message = tag.getNdefMessage();
-//       int recordCount = message.getRecordCount();
-//       for (int i = 0; i < recordCount; i++) {
-//         NdefRecord record = message.getRecord(i);
-//         int payloadLength = record.getPayloadLength();
-//         byte payload[payloadLength];
-//         record.getPayload(payload);
-//         for (int c = 0; c < payloadLength; c++) {
-//           nfc_data += (char)payload[c];
-//         }
-//         return nfc_data;
-//       }
-//     }
-//   } else {
-//     return "NO_NFC";
-//   }
-// }
+String nfc3_read(){
+  String nfc_data = "";
+  if (nfc3.tagPresent(NFC_TIMEOUT)) {
+    NfcTag tag = nfc3.read();
+    if (tag.hasNdefMessage()) {
+      nfc3_uid = tag.getUidString();
+      NdefMessage message = tag.getNdefMessage();
+      int recordCount = message.getRecordCount();
+      for (int i = 0; i < recordCount; i++) {
+        NdefRecord record = message.getRecord(i);
+        int payloadLength = record.getPayloadLength();
+        byte payload[payloadLength];
+        record.getPayload(payload);
+        for (int c = 0; c < payloadLength; c++) {
+          nfc_data += (char)payload[c];
+        }
+        return nfc_data;
+      }
+    }
+  } else {
+    return "NO_NFC";
+  }
+}
 
-// String nfc4_read(){
-//   String nfc_data = "";
-//   if (nfc4.tagPresent(NFC_TIMEOUT)) {
-//     NfcTag tag = nfc4.read();
-//     if (tag.hasNdefMessage()) {
-//       nfc4_uid = tag.getUidString();
-//       NdefMessage message = tag.getNdefMessage();
-//       int recordCount = message.getRecordCount();
-//       for (int i = 0; i < recordCount; i++) {
-//         NdefRecord record = message.getRecord(i);
-//         int payloadLength = record.getPayloadLength();
-//         byte payload[payloadLength];
-//         record.getPayload(payload);
-//         for (int c = 0; c < payloadLength; c++) {
-//           nfc_data += (char)payload[c];
-//         }
-//         return nfc_data;
-//       }
-//     }
-//   } else {
-//     return "NO_NFC";
-//   }
-// }
+String nfc4_read(){
+  String nfc_data = "";
+  if (nfc4.tagPresent(NFC_TIMEOUT)) {
+    NfcTag tag = nfc4.read();
+    if (tag.hasNdefMessage()) {
+      nfc4_uid = tag.getUidString();
+      NdefMessage message = tag.getNdefMessage();
+      int recordCount = message.getRecordCount();
+      for (int i = 0; i < recordCount; i++) {
+        NdefRecord record = message.getRecord(i);
+        int payloadLength = record.getPayloadLength();
+        byte payload[payloadLength];
+        record.getPayload(payload);
+        for (int c = 0; c < payloadLength; c++) {
+          nfc_data += (char)payload[c];
+        }
+        return nfc_data;
+      }
+    }
+  } else {
+    return "NO_NFC";
+  }
+}
 
-// String nfc5_read(){
-//   String nfc_data = "";
-//   if (nfc5.tagPresent(NFC_TIMEOUT)) {
-//     NfcTag tag = nfc5.read();
-//     if (tag.hasNdefMessage()) {
-//       nfc5_uid = tag.getUidString();
-//       NdefMessage message = tag.getNdefMessage();
-//       int recordCount = message.getRecordCount();
-//       for (int i = 0; i < recordCount; i++) {
-//         NdefRecord record = message.getRecord(i);
-//         int payloadLength = record.getPayloadLength();
-//         byte payload[payloadLength];
-//         record.getPayload(payload);
-//         for (int c = 0; c < payloadLength; c++) {
-//           nfc_data += (char)payload[c];
-//         }
-//         return nfc_data;
-//       }
-//     }
-//   } else {
-//     return "NO_NFC";
-//   }
-// }
+String nfc5_read(){
+  String nfc_data = "";
+  if (nfc5.tagPresent(NFC_TIMEOUT)) {
+    NfcTag tag = nfc5.read();
+    if (tag.hasNdefMessage()) {
+      nfc5_uid = tag.getUidString();
+      NdefMessage message = tag.getNdefMessage();
+      int recordCount = message.getRecordCount();
+      for (int i = 0; i < recordCount; i++) {
+        NdefRecord record = message.getRecord(i);
+        int payloadLength = record.getPayloadLength();
+        byte payload[payloadLength];
+        record.getPayload(payload);
+        for (int c = 0; c < payloadLength; c++) {
+          nfc_data += (char)payload[c];
+        }
+        return nfc_data;
+      }
+    }
+  } else {
+    return "NO_NFC";
+  }
+}
 
 String nfc1_getuid(){ return nfc1_uid; }
 String nfc2_getuid(){ return nfc2_uid; }
@@ -339,44 +339,44 @@ void nfc2_write(String content) {
   }
 }
 
-// void nfc3_write(String content) {
-//   if (nfc3.tagPresent(NFC_TIMEOUT)) {
-//     NdefMessage message = NdefMessage();
-//     message.addTextRecord(content);
-//     if(nfc3.write(message)){
-//       Serial.println("Reader 3: write success");
-//     }else{
-//       Serial.println("Reader 3: write failed");
-//     }
-//   } else {
-//     Serial.println("NFC 3: tag not exist, cant write");
-//   }
-// }
+void nfc3_write(String content) {
+  if (nfc3.tagPresent(NFC_TIMEOUT)) {
+    NdefMessage message = NdefMessage();
+    message.addTextRecord(content);
+    if(nfc3.write(message)){
+      Serial.println("Reader 3: write success");
+    }else{
+      Serial.println("Reader 3: write failed");
+    }
+  } else {
+    Serial.println("NFC 3: tag not exist, cant write");
+  }
+}
 
-// void nfc4_write(String content) {
-//   if (nfc4.tagPresent(NFC_TIMEOUT)) {
-//     NdefMessage message = NdefMessage();
-//     message.addTextRecord(content);
-//     if(nfc4.write(message)){
-//       Serial.println("Reader 4: write success");
-//     }else{
-//       Serial.println("Reader 4: write failed");
-//     }
-//   } else {
-//     Serial.println("NFC 4: tag not exist, cant write");
-//   }
-// }
+void nfc4_write(String content) {
+  if (nfc4.tagPresent(NFC_TIMEOUT)) {
+    NdefMessage message = NdefMessage();
+    message.addTextRecord(content);
+    if(nfc4.write(message)){
+      Serial.println("Reader 4: write success");
+    }else{
+      Serial.println("Reader 4: write failed");
+    }
+  } else {
+    Serial.println("NFC 4: tag not exist, cant write");
+  }
+}
 
-// void nfc5_write(String content) {
-//   if (nfc5.tagPresent(NFC_TIMEOUT)) {
-//     NdefMessage message = NdefMessage();
-//     message.addTextRecord(content);
-//     if(nfc5.write(message)){
-//       Serial.println("Reader 5: write success");
-//     }else{
-//       Serial.println("Reader 5: write failed");
-//     }
-//   } else {
-//     Serial.println("NFC 5: tag not exist, cant write");
-//   }
-// }
+void nfc5_write(String content) {
+  if (nfc5.tagPresent(NFC_TIMEOUT)) {
+    NdefMessage message = NdefMessage();
+    message.addTextRecord(content);
+    if(nfc5.write(message)){
+      Serial.println("Reader 5: write success");
+    }else{
+      Serial.println("Reader 5: write failed");
+    }
+  } else {
+    Serial.println("NFC 5: tag not exist, cant write");
+  }
+}
