@@ -18,5 +18,7 @@ void updateSupposedReadings(int start_u);
 
 void rackInfoAlertChecking();
 
+void postServerAssetTag(String id, String uid);
+
 
 
