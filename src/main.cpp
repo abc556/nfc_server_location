@@ -1,6 +1,7 @@
 #include "nfc_pn532.h"
 #include "wifi_c.h"
 #include "mqtt.h"
+#include "trackerlogic.h"
 
 u_int p_time = 0;
 
@@ -23,26 +24,34 @@ void setup() {
   Serial.println("NFC Begin.");
 
   //wifi init
-  // wifi_init();
-  // Serial.println("Wifi Init.");
+  wifi_init();
+  Serial.println("Wifi Init.");
 
   //mqtt init
-  // mqtt_init("Server", "/server");
-  // Serial.println("MQTT connected");
+  mqtt_init("Server", "/tracker/501ef728-6e4d-4d8d-b2b4-19ac01fcf96d/alert");
+  Serial.println("MQTT connected");
+
+  readerInstanceIdxInit();
+  falsifyAlertIsTriggered();
 }
 
 void loop() {
-  // if(millis() - p_time >= 1000) {
-  //   p_time = millis();
-  Serial.println("-----------------------");
-  Serial.println(millis() / 1000);
-  // Serial.print("CS1 : ");
-  // Serial.println(digitalRead(CS1));
-  // Serial.print("CS2 : ");
-  // Serial.println(digitalRead(CS2));
-  // }
+  if(millis() - p_time >= 1000) {
+    p_time = millis();
+    Serial.println("------------" + String(p_time) + "------------");
+    wifi_mqtt_connect_check();
 
-  //nfc
-  nfc_loop();
-  // wifi_mqtt_connect_check();
+    nfc_read_all();
+    printNFCsContents();
+    if (doorIsOpened()) {
+      falsifyAlertIsTriggered();
+      Serial.println("Door is Opened");
+    } else {
+      fetchRackStatusJson();
+      updateInstanceReaderMapping();
+      updateAllReadersStatus();
+      alertsAccordingToReaderStatuses();
+    }
+
+  }
 }
