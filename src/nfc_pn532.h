@@ -34,41 +34,21 @@ extern NfcAdapter nfc2;
 extern NfcAdapter nfc3;
 extern NfcAdapter nfc4;
 extern NfcAdapter nfc5;
-extern NfcAdapter nfc6;
-extern NfcAdapter nfc7;
-extern NfcAdapter nfc8;
-extern NfcAdapter nfc9;
-extern NfcAdapter nfc10;
+// extern NfcAdapter nfc6;
+// extern NfcAdapter nfc7;
+// extern NfcAdapter nfc8;
+// extern NfcAdapter nfc9;
+// extern NfcAdapter nfc10;
 
-extern String nfc1_uid;
-extern String nfc2_uid;
-extern String nfc3_uid;
-extern String nfc4_uid;
-extern String nfc5_uid;
-extern String nfc6_uid;
+
+extern String nfc_uid;
+extern String nfc_content;
 
 
 void nfc_begin();
 void nfc_loop();
-String* nfc_read(NfcAdapter &nfc);
+void nfc_read(NfcAdapter &nfc, int reader_num);
 void nfc_write(NfcAdapter &nfc, int reader_num, String content);
-String nfc1_getuid();
-String nfc2_getuid();
-String nfc3_getuid();
-String nfc4_getuid();
-String nfc5_getuid();
-String nfc6_getuid();
-String nfc1_read();
-String nfc2_read();
-String nfc3_read();
-String nfc4_read();
-String nfc5_read();
-String nfc6_read();
-void nfc1_write(String content);
-void nfc2_write(String content);
-void nfc3_write(String content);
-void nfc4_write(String content);
-void nfc5_write(String content);
-void nfc6_write(String content);
+
 
 #endif

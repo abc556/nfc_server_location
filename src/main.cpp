@@ -38,9 +38,9 @@ void setup() {
 }
 
 void loop() {
-  if(millis() - p_time >= 1000) {
-    p_time = millis();
-    Serial.println("-----------------------" + String(millis()) + "-----------------------");
+  // if(millis() - p_time >= 1000) {
+  //   p_time = millis();
+    Serial.println("----------------------------------------------");
   //   // mqtt_pub("{\"1\":\"\",\"2\":\"\",\"3\":\"{\"name\": \"Countdown14\", \"size\":3}\",\"4\":\"{\"name\": \"Viewco\", \"size\":1}\"");
     wifi_mqtt_connect_check();
     // obj = JSON_deserialization("{\"sensor\":\"gps\",\"time\":1351824120,"
@@ -56,7 +56,7 @@ void loop() {
     updateSupposedReadings(16);
     rackInfoAlertChecking();
     // rackInfoComparison();
-  }
+  // }
 
   //nfc
   // nfc_loop();

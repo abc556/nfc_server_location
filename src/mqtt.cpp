@@ -28,12 +28,12 @@ void mqtt_pub(String content){
   if (!mqttclient.connected()) {
     Serial.println("mqtt broker not connected. Reconnecting ...");
     mqtt_connect();
-    delay(500);
   }
   else{
     mqttclient.publish(MQTT_TOPIC_SERVER, content.c_str());
     Serial.println("published");
   }
+
 }
 
 
