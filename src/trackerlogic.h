@@ -18,5 +18,7 @@ void rackInfoAlertChecking();
 
 void postServerAssetTag(String id, String uid);
 
+void updateReaderStatus(NfcAdapter &nfc, int reader_num);
+
 
 

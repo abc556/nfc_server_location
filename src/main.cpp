@@ -42,7 +42,7 @@ void loop() {
     p_time = millis();
     Serial.println("-----------------------" + String(millis()) + "-----------------------");
   //   // mqtt_pub("{\"1\":\"\",\"2\":\"\",\"3\":\"{\"name\": \"Countdown14\", \"size\":3}\",\"4\":\"{\"name\": \"Viewco\", \"size\":1}\"");
-    // wifi_mqtt_connect_check();
+    wifi_mqtt_connect_check();
     // obj = JSON_deserialization("{\"sensor\":\"gps\",\"time\":1351824120,"
     //                      "\"data\":[48.756080,2.302038]}");
     // serial = JSON_serialization(obj);
@@ -53,7 +53,7 @@ void loop() {
     // http_post("/devices", serial, true, "admin", "Monit@r#1");
     // nfc_loop();
     updateRackInfoJson();
-    updateSupposedReadings(26);
+    updateSupposedReadings(16);
     rackInfoAlertChecking();
     // rackInfoComparison();
   }

@@ -11,10 +11,8 @@
 #define CS8 25
 #define CS9 26
 #define CS10 27
-#define CS11 32
-#define CS12 33
 
-#define NFC_TIMEOUT 200
+#define NFC_TIMEOUT 100
 
 extern const int READER_COUNT;
 
@@ -31,6 +29,17 @@ extern const int READER_COUNT;
 // PN532_I2C pn532_i2c(Wire);
 // NfcAdapter nfc = NfcAdapter(pn532_i2c);
 
+extern NfcAdapter nfc1;
+extern NfcAdapter nfc2;
+extern NfcAdapter nfc3;
+extern NfcAdapter nfc4;
+extern NfcAdapter nfc5;
+extern NfcAdapter nfc6;
+extern NfcAdapter nfc7;
+extern NfcAdapter nfc8;
+extern NfcAdapter nfc9;
+extern NfcAdapter nfc10;
+
 extern String nfc1_uid;
 extern String nfc2_uid;
 extern String nfc3_uid;
@@ -41,7 +50,8 @@ extern String nfc6_uid;
 
 void nfc_begin();
 void nfc_loop();
-void nfc_read();
+String* nfc_read(NfcAdapter &nfc);
+void nfc_write(NfcAdapter &nfc, int reader_num, String content);
 String nfc1_getuid();
 String nfc2_getuid();
 String nfc3_getuid();
