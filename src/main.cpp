@@ -5,6 +5,7 @@
 
 u_int p_time = 0;
 
+
 void wifi_mqtt_connect_check(){
   if(!wifi_stat()){
       Serial.println("wifi not connected");
@@ -36,22 +37,35 @@ void setup() {
 }
 
 void loop() {
-  if(millis() - p_time >= 1000) {
+  // if(millis() - p_time >= 1000) {
     p_time = millis();
     Serial.println("------------" + String(p_time) + "------------");
     wifi_mqtt_connect_check();
-
     nfc_read_all();
     printNFCsContents();
     if (doorIsOpened()) {
       falsifyAlertIsTriggered();
       Serial.println("Door is Opened");
+      door_closed_n_mqtt_published = false;
+      count_door_closed = 0;
+      mqtt_json_string = "";
     } else {
       fetchRackStatusJson();
       updateInstanceReaderMapping();
       updateAllReadersStatus();
       alertsAccordingToReaderStatuses();
+      Serial.println("count_door_closed: " + String(count_door_closed));
+      Serial.println(mqtt_json_string);
+      if (count_door_closed >= ALERT_THRESHOLD+1 && door_closed_n_mqtt_published == false) {
+        if(mqtt_json_string!="") {
+          mqtt_json_string += "}";
+          mqtt_pub(mqtt_json_string);
+          door_closed_n_mqtt_published = true;
+        }
+      } else {
+        count_door_closed++;
+      }
     }
 
-  }
+  // }
 }

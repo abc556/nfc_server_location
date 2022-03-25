@@ -19,15 +19,23 @@
 #include <PN532.h>
 #include <NfcAdapter.h>
 
-#define TAG_NOT_PRESENT "TAG_NOT_PRESENT"
-#define TAG_NULL_CONTENT "NULL"
+#define TAG_NOT_PRESENT "XXXX"
+#define TAG_NULL_CONTENT "NNNN"
 
 // nfc configuration //
-#define READER_COUNT 2
-///////////////////////
-
+#define READER_COUNT 10
 extern NfcAdapter nfc1;
 extern NfcAdapter nfc2;
+extern NfcAdapter nfc3;
+extern NfcAdapter nfc4;
+extern NfcAdapter nfc5;
+extern NfcAdapter nfc6;
+extern NfcAdapter nfc7;
+extern NfcAdapter nfc8;
+extern NfcAdapter nfc9;
+extern NfcAdapter nfc10;
+///////////////////////
+
 
 extern String NFCs_uid [READER_COUNT];
 extern String NFCs_content [READER_COUNT];

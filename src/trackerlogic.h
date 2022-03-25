@@ -10,7 +10,7 @@
 
 // rack configurations //
 #define U_INTERVAL 2
-#define STARTING_U 38
+#define STARTING_U 16
 #define ALERT_THRESHOLD 4
 #define HTTP_USERNAME "admin"
 #define HTTP_PASSWORD "Monit@r#1"
@@ -28,8 +28,14 @@
 #define ALERT_ID_NORMAL 5
 #define ALERT_ID_UNKNOWN 6
 
+extern int count_door_closed;
+
 extern int reader_instance_idx [READER_COUNT];
 extern boolean alert_idx_status [ALERT_TOTAL_COUNT];
+
+extern boolean door_closed_n_mqtt_published;
+
+extern String mqtt_json_string;
 
 void readerInstanceIdxInit();
 
