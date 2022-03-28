@@ -47,6 +47,7 @@ void loop() {
       falsifyAlertIsTriggered();
       Serial.println("Door is Opened");
       door_closed_n_mqtt_published = false;
+      is_critical = false;
       count_door_closed = 0;
       mqtt_json_string = "";
     } else {
@@ -58,7 +59,7 @@ void loop() {
       Serial.println(mqtt_json_string);
       if (count_door_closed >= ALERT_THRESHOLD+1 && door_closed_n_mqtt_published == false) {
         if(mqtt_json_string!="") {
-          mqtt_json_string += "}";
+          mqtt_json_string += "\"}";
           mqtt_pub(mqtt_json_string);
           door_closed_n_mqtt_published = true;
         }
@@ -66,6 +67,5 @@ void loop() {
         count_door_closed++;
       }
     }
-
   // }
 }
