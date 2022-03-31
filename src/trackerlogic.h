@@ -21,7 +21,7 @@
 #define RESERVED_MOVE 6
 #define PLAN_DEMMISSION 9
 #define RESERVED_PROCUREMENT 4
-#define ALERT_TOTAL_COUNT 7
+#define ALERT_TOTAL_COUNT 9
 #define ALERT_ID_ADD 1
 #define ALERT_ID_INCORRECT 2
 #define ALERT_ID_MISSING 3
@@ -29,17 +29,22 @@
 #define ALERT_ID_NORMAL 5
 #define ALERT_ID_UNKNOWN 6
 #define ALERT_ID_MISSING_TAG 7
-#define STATUS_ID_NORMAL 0
-#define STATUS_ID_WARNING 1
-#define STATUS_ID_CRITICAL 2
+#define ALERT_ID_ALREADY_WRITTEN 8
+#define ALERT_ID_UPDATED 9
+#define STATUS_ID_NORMAL "N0"
+#define STATUS_ID_WARNING "W1"
+#define STATUS_ID_CRITICAL "C2"
 
 extern int count_door_closed;
 
 extern int reader_instance_idx [READER_COUNT];
 extern boolean alert_idx_status [ALERT_TOTAL_COUNT];
 
+extern boolean door_closed_n_fetched_rack_info;
 extern boolean door_closed_n_mqtt_published;
 extern boolean is_critical;
+
+extern int mqtt_pub_count;
 
 extern String mqtt_json_string;
 
@@ -49,6 +54,7 @@ void falsifyAlertIsTriggered();
 
 boolean doorIsOpened();
 
+void fetchRackName();
 void fetchRackStatusJson();
 void updateInstanceReaderMapping();
 
@@ -57,7 +63,7 @@ void postAssetTag(String id, String model_id, String name, String description, S
 String updateReaderStatus(NfcAdapter &nfc, int reader_num);
 void updateAllReadersStatus();
 
-boolean instanceAlertPublish(std::vector<int> &array, int status_id, int alert_id, String mqtt_content_note);
-boolean readerAlertPublish(std::vector<int> &array, int status_id, int alert_id, String mqtt_content_note);
-void normalStatusPublish(int alert_id);
+boolean instanceAlertPublish(std::vector<int> &array, String status_id, int alert_id, String mqtt_content_note);
+boolean readerAlertPublish(std::vector<int> &array, String status_id, int alert_id, String mqtt_content_note);
+void normalStatusPublish(String status_id, int alert_id);
 void alertsAccordingToReaderStatuses();
