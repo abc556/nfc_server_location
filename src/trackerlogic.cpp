@@ -443,7 +443,7 @@ void normalStatusPublish(String status_id, int alert_id) {
     String alert_string = "";
     serializeJson(alert_json, alert_string);
     if (alert_idx_status[alert_id-1] == false) {
-        if (mqtt_pub_count < 4) {
+        if (mqtt_pub_count < MQTT_PUB_TIMES) {
             mqtt_pub(alert_string);
             mqtt_pub_count++;
         } else {

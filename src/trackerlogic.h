@@ -14,6 +14,7 @@
 #define ALERT_THRESHOLD 4
 #define HTTP_USERNAME "admin"
 #define HTTP_PASSWORD "Monit@r#1"
+#define MQTT_PUB_TIMES 31
 ///////////////////////////
 
 #define OPERATIONAL 1
